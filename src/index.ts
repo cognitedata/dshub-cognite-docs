@@ -10,8 +10,9 @@ import { ILauncher } from '@jupyterlab/launcher';
  * An IFrame subclass that bundles all info pertaining to Cognite Docs.
  */
 class CogniteDocFrame extends IFrame {
-  // I wanted to use a static counter to auto-rank the CogniteDocFrames
-  // by the order of when they are linked to the launcher.
+  // I wanted to use a static counter to auto-rank (their order in the launcher) the CogniteDocFrames
+  // by the order of when they are linked to the launcher. Probably a bad idea,
+  // as it just adds complexity without much gain. Should just set these manually.
   static rank = 0;
 
   public readonly _category: string;
