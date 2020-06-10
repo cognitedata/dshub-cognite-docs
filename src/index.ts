@@ -105,7 +105,8 @@ function activateCogniteDocumentationButtons(
   addDocCommandToPalette(app, pythonDocsWidget, commandPalette);
   addDocCommandToPalette(app, APIDocsWidget, commandPalette);
 
-  // Add the widgets to the launcher.
+  // Add the widgets to the launcher. The rank tells us in which order items are
+  // displayed. Launcher items under the same category are grouped together.
   launcher.add({
     command: pythonDocs.commandId,
     category: pythonDocs.category,
