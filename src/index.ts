@@ -1,15 +1,6 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-  ILayoutRestorer
-} from '@jupyterlab/application';
+import { ILayoutRestorer, JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 
-import {
-  IFrame,
-  ICommandPalette,
-  MainAreaWidget,
-  WidgetTracker
-} from '@jupyterlab/apputils';
+import { ICommandPalette, IFrame, MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
 interface ICogniteDocFrameOptions {
@@ -97,6 +88,17 @@ function addDocCommandToPalette(
   });
 }
 
+function initializeDocFrame(
+  docFrameOptions: ICogniteDocFrameOptions,
+  app: JupyterFrontEnd,
+  launcher: ILauncher,
+  commandPalette: ICommandPalette,
+  restorer: ILayoutRestorer,
+  tracker: WidgetTracker<MainAreaWidget<CogniteDocFrame>>
+) {
+  return;
+}
+
 /**
  * The function that executes when the extension loads. Creates
  * a CogniteDocFrame for the PythonSDK and the API, calls `addDocCommandToPalette`,
@@ -109,19 +111,38 @@ function addDocCommandToPalette(
 function activateCogniteDocumentationButtons(
   app: JupyterFrontEnd,
   commandPalette: ICommandPalette,
-  launcher: ILauncher
+  launcher: ILauncher,
+  restorer: ILayoutRestorer
 ): void {
-  const pythonDocsOptions = {
-    title: 'Cognite Python SDK Docs',
-    url: 'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
-    commandId: 'cognite:open_python_docs'
-  };
+  const tracker = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
+    namespace: 'cognite-docs'
+  });
 
-  const APIDocsOptions = {
-    title: 'Cognite API Docs',
-    url: 'https://docs.cognite.com/api/v1/',
-    commandId: 'cognite:open_api_docs'
-  };
+  initializeDocFrame(
+    {
+      title: 'Cognite Python SDK Docs',
+      url: 'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
+      commandId: 'cognite:open_python_docs'
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    tracker
+  );
+
+  initializeDocFrame(
+    {
+      title: 'Cognite API Docs',
+      url: 'https://docs.cognite.com/api/v1/',
+      commandId: 'cognite:open_api_docs'
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    tracker
+  );
 
   // Create relevant CogniteDocFrames.
   const pythonDocs = new CogniteDocFrame(
