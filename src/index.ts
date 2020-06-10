@@ -12,6 +12,12 @@ import {
 } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
+interface ICogniteDocFrameOptions {
+  title: string;
+  url: string;
+  commandId: string;
+}
+
 /**
  * An IFrame subclass that bundles all info pertaining to Cognite Docs.
  */
@@ -105,6 +111,18 @@ function activateCogniteDocumentationButtons(
   commandPalette: ICommandPalette,
   launcher: ILauncher
 ): void {
+  const pythonDocsOptions = {
+    title: 'Cognite Python SDK Docs',
+    url: 'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
+    commandId: 'cognite:open_python_docs'
+  };
+
+  const APIDocsOptions = {
+    title: 'Cognite API Docs',
+    url: 'https://docs.cognite.com/api/v1/',
+    commandId: 'cognite:open_api_docs'
+  };
+
   // Create relevant CogniteDocFrames.
   const pythonDocs = new CogniteDocFrame(
     'Cognite Python SDK Docs',
