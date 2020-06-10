@@ -37,6 +37,10 @@ class CogniteDocFrame extends IFrame {
     this.url = url;
     this.rank = CogniteDocFrame.rank;
     CogniteDocFrame.rank += 1;
+
+    // We can selectively allow some Sandbox-exceptions. All restrictions are applied by default.
+
+    this.sandbox = ['allow-same-origin'];
   }
 }
 
