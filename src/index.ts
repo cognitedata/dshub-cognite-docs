@@ -4,7 +4,12 @@ import {
   ILayoutRestorer
 } from '@jupyterlab/application';
 
-import { IFrame, ICommandPalette, MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
+import {
+  IFrame,
+  ICommandPalette,
+  MainAreaWidget,
+  WidgetTracker
+} from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
 /**
@@ -100,9 +105,6 @@ function activateCogniteDocumentationButtons(
   commandPalette: ICommandPalette,
   launcher: ILauncher
 ): void {
-
-
-
   // Create relevant CogniteDocFrames.
   const pythonDocs = new CogniteDocFrame(
     'Cognite Python SDK Docs',
