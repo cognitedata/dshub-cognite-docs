@@ -30,11 +30,22 @@ class CogniteDocFrame extends IFrame {
   constructor(title: string, url: string, commandId: string) {
     super();
 
+    // The category under which the command will be organized.
     this._category = 'CDF // Documentation';
+
+    // The title.label is the title displayed in the widget tab.
     this.title.label = title;
+
+    // Whether or not you can close the window, we want this to be true.
     this.title.closable = true;
+
+    // Store the ID of the corresponding command.
     this._commandId = commandId;
+
+    // The url of the iFrame content we wish to load. In this case, docs-url.
     this.url = url;
+
+    // Launcher items are ordered by rank.
     this.rank = CogniteDocFrame.rank;
     CogniteDocFrame.rank += 1;
 
