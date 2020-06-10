@@ -1,9 +1,10 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
+  ILayoutRestorer
 } from '@jupyterlab/application';
 
-import { IFrame, ICommandPalette, MainAreaWidget } from '@jupyterlab/apputils';
+import { IFrame, ICommandPalette, MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
 /**
@@ -99,6 +100,10 @@ function activateCogniteDocumentationButtons(
   commandPalette: ICommandPalette,
   launcher: ILauncher
 ): void {
+
+
+
+  // Create relevant CogniteDocFrames.
   const pythonDocs = new CogniteDocFrame(
     'Cognite Python SDK Docs',
     'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
@@ -135,16 +140,16 @@ function activateCogniteDocumentationButtons(
 }
 
 /**
- * Initialization data for the cognite-functions extension.
+ * Initialization data for the cognite-documentation extension.
  * Entrypoint for the JupyterExtension. For devs, I recommend you start here.
  * This function is responsible for requesting additional functionality (using the requires keyword),
  * and when the extension is activated, it calls the 'activate'-function. If auto-start is enabled, it
  * automatically activates on page-load.
  */
 const extension: JupyterFrontEndPlugin<void> = {
-  id: 'cognite-functions',
+  id: 'cognite-documentation',
   autoStart: true,
-  requires: [ICommandPalette, ILauncher],
+  requires: [ICommandPalette, ILauncher, ILayoutRestorer],
   activate: activateCogniteDocumentationButtons
 };
 
