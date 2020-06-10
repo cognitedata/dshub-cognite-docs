@@ -121,6 +121,10 @@ function activateCogniteDocumentationButtons(
 
 /**
  * Initialization data for the cognite-functions extension.
+ * Entrypoint for the JupyterExtension. For devs, I recommend you start here.
+ * This function is responsible for requesting additional functionality (using the requires keyword),
+ * and when the extension is activated, it calls the 'activate'-function. If auto-start is enabled, it
+ * automatically activates on page-load.
  */
 const extension: JupyterFrontEndPlugin<void> = {
   id: 'cognite-functions',
