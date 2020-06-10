@@ -89,13 +89,13 @@ function activateCogniteDocumentationButtons(
   launcher: ILauncher
 ): void {
   const pythonDocs = new CogniteDocFrame(
-    'Cognite Python SDK',
+    'Cognite Python SDK Docs',
     'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
     'cognite:open_python_docs'
   );
 
   const APIDocs = new CogniteDocFrame(
-    'Cognite API',
+    'Cognite API Docs',
     'https://docs.cognite.com/api/v1/',
     'cognite:open_api_docs'
   );
