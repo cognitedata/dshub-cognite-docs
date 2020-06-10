@@ -10,6 +10,8 @@ import { ILauncher } from '@jupyterlab/launcher';
  * An IFrame subclass that bundles all info pertaining to Cognite Docs.
  */
 class CogniteDocFrame extends IFrame {
+  // I wanted to use a static counter to auto-rank the CogniteDocFrames
+  // by the order of when they are linked to the launcher.
   static rank = 0;
 
   public readonly _category: string;
@@ -94,12 +96,15 @@ function activateCogniteDocumentationButtons(
     'cognite:open_api_docs'
   );
 
+  // Create one widget for each doc-page we wish to have available in the launcher.
   const pythonDocsWidget = new MainAreaWidget({ content: pythonDocs });
   const APIDocsWidget = new MainAreaWidget({ content: APIDocs });
 
+  // Create, add, and link the respective commands for opening the doc-widget.
   addDocCommandToPalette(app, pythonDocsWidget, commandPalette);
   addDocCommandToPalette(app, APIDocsWidget, commandPalette);
 
+  // Add the widgets to the launcher.
   launcher.add({
     command: pythonDocs.commandId,
     category: pythonDocs.category,
