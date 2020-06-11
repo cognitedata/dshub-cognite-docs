@@ -22,7 +22,7 @@ fixes this.
 ### Install
 
 ```bash
-jupyter labextension install cognite-functions
+jupyter labextension install dshub-cognite-docs
 ```
 
 ### Contributing
@@ -35,7 +35,7 @@ The `jlpm` command is JupyterLab's pinned version of
 
 ```bash
 # Clone the repo to your local environment
-# Move to cognite-functions directory
+# Move to dshub-cognite-docs directory
 
 # Install dependencies
 jlpm
@@ -62,5 +62,5 @@ jupyter lab --watch
 
 ```bash
 
-jupyter labextension uninstall cognite-functions
+jupyter labextension uninstall dshub-cognite-docs
 ```

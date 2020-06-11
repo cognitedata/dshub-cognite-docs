@@ -1,7 +1,7 @@
 {
-  "name": "cognite-functions",
+  "name": "dshub-cognite-docs",
   "version": "0.1.0",
-  "description": "Integrates with CDF to provide additional functionality in JupyterLab",
+  "description": "Adds the possibility of displaying cognite documentation from within DSHub.",
   "keywords": [
     "jupyter",
     "jupyterlab",
