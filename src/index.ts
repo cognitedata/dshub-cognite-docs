@@ -11,8 +11,8 @@ import {
   WidgetTracker
 } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
-
 import { IMainMenu } from '@jupyterlab/mainmenu';
+import { Menu } from '@lumino/widgets';
 
 interface ICogniteDocFrameOptions {
   title: string;
@@ -77,7 +77,7 @@ function initializeDocFrame(
   commandPalette: ICommandPalette,
   restorer: ILayoutRestorer,
   tracker: WidgetTracker<MainAreaWidget<CogniteDocFrame>>
-) {
+): void {
   // We declare a widget-variable for tracking purposes.
   let widget: MainAreaWidget<CogniteDocFrame>;
 
@@ -129,13 +129,15 @@ function initializeDocFrame(
  * @param app main Jupyter application
  * @param commandPalette a reference to the commandPalette
  * @param launcher a reference to the jupyter launcher.
- * @param restorer
+ * @param restorer a reference to the jupyter layout restorer
+ * @param mainMenu a reference to the top-bar in jupyter.
  */
 function activateCogniteDocumentationButtons(
   app: JupyterFrontEnd,
   commandPalette: ICommandPalette,
   launcher: ILauncher,
-  restorer: ILayoutRestorer
+  restorer: ILayoutRestorer,
+  mainMenu: IMainMenu
 ): void {
   const tracker = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
     namespace: 'cognite-docs'
@@ -180,6 +182,19 @@ function activateCogniteDocumentationButtons(
       name: () => 'cognite-docs'
     });
   }
+
+  // Register the doc-commands in the Cognite MainMenu Item.
+  const cogniteMenu = new Menu({ commands: app.commands });
+  cogniteMenu.title.label = 'CDF';
+  for (const cmd of ['cognite:open_python_docs', 'cognite:open_api_docs']) {
+    cogniteMenu.addItem({
+      command: cmd,
+      args: {}
+    });
+  }
+
+  // Add the CDF-menu to the main menu
+  mainMenu.addMenu(cogniteMenu, { rank: 40 });
 }
 
 /**
