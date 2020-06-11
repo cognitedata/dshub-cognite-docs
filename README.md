@@ -1,11 +1,20 @@
 # dshub-cognite-docs
 
-A DSHub extension that provides cognite documentation in separate IFrame widgets.
+A DSHub extension that provides cognite documentation in separate IFrame widgets that can be freely moved and pinned
+around the screen.
 The extension provides both launcher icons and menu-items for opening the Python SDK 
 and the API documentation.
 
+![](images/example_cognite_split.png)
+
+## Known Issues
+
+* Opening a widget, closing it, then reopening it renders the widget unable to be closed again. A refresh of the page
+fixes this.
+* Restoring the layout on page-refresh may act up.
 
 
+## Development instructions
 ### Requirements
 
 * JupyterLab >= 2.0
