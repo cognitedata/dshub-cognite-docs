@@ -12,6 +12,8 @@ import {
 } from '@jupyterlab/apputils';
 import { ILauncher } from '@jupyterlab/launcher';
 
+import { IMainMenu } from '@jupyterlab/mainmenu';
+
 interface ICogniteDocFrameOptions {
   title: string;
   url: string;
@@ -139,6 +141,7 @@ function activateCogniteDocumentationButtons(
     namespace: 'cognite-docs'
   });
 
+  // Create and register the Python SDK Docs command with the launcher
   initializeDocFrame(
     {
       title: 'Cognite Python SDK Docs',
@@ -154,6 +157,7 @@ function activateCogniteDocumentationButtons(
     tracker
   );
 
+  // Create and register the API Docs command with the launcher
   initializeDocFrame(
     {
       title: 'Cognite API Docs',
@@ -169,6 +173,7 @@ function activateCogniteDocumentationButtons(
     tracker
   );
 
+  // Restore the layouts
   for (const cmd of ['cognite:open_python_docs', 'cognite:open_api_docs']) {
     restorer.restore(tracker, {
       command: cmd,
@@ -187,7 +192,7 @@ function activateCogniteDocumentationButtons(
 const extension: JupyterFrontEndPlugin<void> = {
   id: 'cognite-documentation',
   autoStart: true,
-  requires: [ICommandPalette, ILauncher, ILayoutRestorer],
+  requires: [ICommandPalette, ILauncher, ILayoutRestorer, IMainMenu],
   activate: activateCogniteDocumentationButtons
 };
 
