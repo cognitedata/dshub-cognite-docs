@@ -1,4 +1,4 @@
-d# cognite-functions
+# cognite-functions
 
 ![Github Actions Status](./workflows/Build/badge.svg)
 
