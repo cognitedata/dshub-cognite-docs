@@ -1,24 +1,24 @@
-# cognite-functions
+# dshub-cognite-docs
 
-![Github Actions Status](./workflows/Build/badge.svg)
+A DSHub extension that provides cognite documentation in separate IFrame widgets.
+The extension provides both launcher icons and menu-items for opening the Python SDK 
+and the API documentation.
 
-Integrates with CDF to provide additional functionality in JupyterLab
 
 
-
-## Requirements
+### Requirements
 
 * JupyterLab >= 2.0
 
-## Install
+### Install
 
 ```bash
 jupyter labextension install cognite-functions
 ```
 
-## Contributing
+### Contributing
 
-### Install
+#### Install
 
 The `jlpm` command is JupyterLab's pinned version of
 [yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
@@ -49,7 +49,7 @@ jlpm watch
 jupyter lab --watch
 ```
 
-### Uninstall
+#### Uninstall
 
 ```bash
 
