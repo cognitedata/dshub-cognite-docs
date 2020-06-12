@@ -156,7 +156,7 @@ function activateCogniteDocumentationButtons(
   // Create and register the Python SDK Docs command with the launcher
   initializeDocFrame(
     {
-      title: 'Cognite Python SDK Docs',
+      title: 'Python SDK Docs',
       url: 'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
       commandId: 'cognite:open_python_docs',
       category: 'Cognite',
@@ -172,7 +172,7 @@ function activateCogniteDocumentationButtons(
   // Create and register the API Docs command with the launcher
   initializeDocFrame(
     {
-      title: 'Cognite API Docs',
+      title: 'API Docs',
       url: 'https://docs.cognite.com/api/v1/',
       commandId: 'cognite:open_api_docs',
       category: 'Cognite',
