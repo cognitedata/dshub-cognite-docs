@@ -64,6 +64,8 @@ class CogniteDocFrame extends IFrame {
     // Whether or not you can close the window, we want this to be true.
     this.title.closable = true;
 
+    this.title.icon = cogniteIcon;
+
     // Store the ID of the corresponding command.
     this._commandId = commandId;
 
@@ -213,7 +215,7 @@ function activateCogniteDocumentationButtons(
  * Initialization data for the cognite-documentation extension.
  * Entrypoint for the JupyterExtension. For devs, I recommend you start here.
  * This function is responsible for requesting additional functionality (using the requires keyword),
- * and when the extension is activated, it calls the 'activate'-function. If auto-start is enabled, it
+ * and when the extension is activated, it calls the 'activate'-function. If auto-start is enabled,
  * automatically activates on page-load.
  */
 const extension: JupyterFrontEndPlugin<void> = {
