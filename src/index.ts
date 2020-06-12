@@ -83,7 +83,7 @@ function initializeDocFrame(
 
   app.commands.addCommand(docFrameOptions.commandId, {
     label: docFrameOptions.title,
-
+    caption: 'Open documentation',
     // Define the command-functionality.
     execute: () => {
       // If the MainAreaWidget is not defined, we create one.
@@ -119,6 +119,7 @@ function initializeDocFrame(
     category: docFrameOptions.category,
     rank: docFrameOptions.rank
   });
+
 }
 
 /**
