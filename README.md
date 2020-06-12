@@ -9,9 +9,9 @@ and the API documentation.
 
 ## Known Issues
 
-* Opening a widget, closing it, then reopening it renders the widget unable to be closed again. A refresh of the page
-fixes this.
-* Restoring the layout on page-refresh may act up.
+* [Fixed] ~~Opening a widget, closing it, then reopening it renders the widget unable to be closed again. A refresh of the page
+fixes this~~.
+* Restoring the layout on page-refresh may act up. [Need to look into how to restore multiple widgets]
 
 
 ## Development instructions
