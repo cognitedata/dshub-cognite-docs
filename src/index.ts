@@ -109,7 +109,6 @@ function initializeDocFrame(
       }
       // Check whether the widget is already tracked. If not, we start tracking.
       if (!tracker.has(widget)) {
-        console.log('I should be here now, twice');
         tracker.add(widget);
       }
       // If the widget is not attached to the main work area, we attach it.
