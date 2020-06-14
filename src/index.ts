@@ -151,8 +151,8 @@ function activateCogniteDocumentationButtons(
   restorer: ILayoutRestorer,
   mainMenu: IMainMenu
 ): void {
-  const tracker = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
-    namespace: 'cognite-docs'
+  const trackerPythonDocs = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
+    namespace: 'cognite-docs-python'
   });
 
   // Create and register the Python SDK Docs command with the launcher
@@ -168,9 +168,12 @@ function activateCogniteDocumentationButtons(
     launcher,
     commandPalette,
     restorer,
-    tracker
+    trackerPythonDocs
   );
 
+  const trackerAPIDocs = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
+    namespace: 'cognite-docs-api'
+  });
   // Create and register the API Docs command with the launcher
   initializeDocFrame(
     {
@@ -184,16 +187,19 @@ function activateCogniteDocumentationButtons(
     launcher,
     commandPalette,
     restorer,
-    tracker
+    trackerAPIDocs
   );
 
-  // Restore the layouts
-  for (const cmd of ['cognite:open_python_docs', 'cognite:open_api_docs']) {
-    restorer.restore(tracker, {
-      command: cmd,
-      name: () => 'cognite-docs'
-    });
-  }
+  // Hackish way of restoring the layout, having one tracker per widget.
+  // I do not understand how the widget-tracker works.
+  restorer.restore(trackerPythonDocs, {
+    command: 'cognite:open_python_docs',
+    name: () => 'cognite-docs-python'
+  });
+  restorer.restore(trackerAPIDocs, {
+    command: 'cognite:open_api_docs',
+    name: () => 'cognite-docs-api'
+  });
 
   // Register the doc-commands in the Cognite MainMenu Item.
   const cogniteMenu = new Menu({ commands: app.commands });
