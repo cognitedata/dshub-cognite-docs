@@ -143,7 +143,6 @@ function initializeDocFrame(
  * @param launcher a reference to the jupyter launcher.
  * @param restorer a reference to the jupyter layout restorer
  * @param mainMenu a reference to the top-bar in jupyter.
- * @param themeManager
  */
 function activateCogniteDocumentationButtons(
   app: JupyterFrontEnd,
