@@ -12,7 +12,7 @@ and the API documentation.
 * [Fixed] ~~Opening a widget, closing it, then reopening it renders the widget unable to be closed again. A refresh of the page
 fixes this~~.
 * [Fixed] ~~Restoring the layout on page-refresh may act up. Need to look into how to restore multiple widgets~~
-* Icons are hard to see when using the dark theme.
+* [Fixed] ~~Icons are hard to see when using the dark theme.~~ Currently needs a refresh for changes to take effect.
 
 ## Development instructions
 ### Requirements
