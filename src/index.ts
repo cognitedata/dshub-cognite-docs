@@ -25,6 +25,7 @@ interface ICogniteDocFrameOptions {
   rank?: number | undefined;
 }
 
+// Setting class="jp-icon0" ensures that colors contrast the current theme background.
 const cogniteLogo = new LabIcon({
   name: 'Cognite Logo',
   svgstr:
