@@ -1,6 +1,6 @@
 {
   "name": "@cognite/dshub-cognite-docs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Adds the possibility of displaying cognite documentation from within DSHub.",
   "keywords": [
     "jupyter",
@@ -29,7 +29,7 @@
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
-    "prepare": "jlpm run clean && jlpm run build",
+    "prepare": "npm run clean && npm run build",
     "watch": "tsc -w"
   },
   "dependencies": {
