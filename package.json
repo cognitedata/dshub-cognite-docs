@@ -1,5 +1,5 @@
 {
-  "name": "dshub-cognite-docs",
+  "name": "@cognite/dshub-cognite-docs",
   "version": "0.1.0",
   "description": "Adds the possibility of displaying cognite documentation from within DSHub.",
   "keywords": [
