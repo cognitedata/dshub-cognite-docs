@@ -78,7 +78,7 @@ class CogniteDocFrame extends IFrame {
     CogniteDocFrame.rank += 1;
 
     // We can selectively allow some Sandbox-exceptions. All restrictions are applied by default.
-    this.sandbox = ['allow-same-origin', 'allow-scripts'];
+    this.sandbox = ['allow-same-origin', 'allow-scripts', 'allow-forms'];
   }
 }
 
