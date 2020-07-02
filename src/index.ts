@@ -116,6 +116,9 @@ function initializeDocFrame(
       if (!widget.isAttached) {
         app.shell.add(widget, 'main');
       }
+
+      // If the widget is attached, yet not focused, we refocus it here.
+      app.shell.activateById(widget.id);
       widget.content.update();
     }
   });
