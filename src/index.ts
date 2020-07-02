@@ -191,6 +191,48 @@ function activateCogniteDocumentationButtons(
     trackerAPIDocs
   );
 
+  const trackerExperimentalPythonDocs = new WidgetTracker<
+    MainAreaWidget<CogniteDocFrame>
+  >({
+    namespace: 'cognite-docs-experimental-python'
+  });
+
+  initializeDocFrame(
+    {
+      title: 'Experimental Python SDK Docs',
+      url: 'https://cognite-sdk-experimental.readthedocs-hosted.com/en/latest/',
+      commandId: 'cognite:open_experimental_python_docs',
+      category: 'Cognite',
+      rank: 2
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    trackerExperimentalPythonDocs
+  );
+
+  const trackerExperimentalAPIDocs = new WidgetTracker<
+    MainAreaWidget<CogniteDocFrame>
+  >({
+    namespace: 'cognite-docs-experimental-api'
+  });
+
+  initializeDocFrame(
+    {
+      title: 'Experimental API Docs',
+      url: 'https://docs.cognite.com/api/playground/',
+      commandId: 'cognite:open_experimental_api_docs',
+      category: 'Cognite',
+      rank: 3
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    trackerExperimentalAPIDocs
+  );
+
   // Hackish way of restoring the layout, having one tracker per widget.
   // I do not understand how the widget-tracker works.
   restorer.restore(trackerPythonDocs, {
@@ -201,12 +243,25 @@ function activateCogniteDocumentationButtons(
     command: 'cognite:open_api_docs',
     name: () => 'cognite-docs-api'
   });
+  restorer.restore(trackerExperimentalPythonDocs, {
+    command: 'cognite:open_experimental_python_docs',
+    name: () => 'cognite-docs-experimental-python'
+  });
+  restorer.restore(trackerExperimentalAPIDocs, {
+    command: 'cognite:open_experimental_api_docs',
+    name: () => 'cognite-docs-experimental-api'
+  });
 
   // Register the doc-commands in the Cognite MainMenu Item.
   const cogniteMenu = new Menu({ commands: app.commands });
   cogniteMenu.title.label = 'CDF';
 
-  for (const cmd of ['cognite:open_python_docs', 'cognite:open_api_docs']) {
+  for (const cmd of [
+    'cognite:open_python_docs',
+    'cognite:open_api_docs',
+    'cognite:open_experimental_python_docs',
+    'cognite:open_experimental_api_docs'
+  ]) {
     cogniteMenu.addItem({
       command: cmd,
       args: {}
