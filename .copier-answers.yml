@@ -1,0 +1,19 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.2.1
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: ivar.stangeby@cognite.com
+author_name: Ivar Stangeby
+data_format: string
+file_extension: ''
+has_binder: false
+has_settings: false
+kind: frontend
+labextension_name: dshub-cognite-docs
+mimetype: ''
+mimetype_name: ''
+project_short_description: Integrated Cognite documentation
+python_name: dshub_cognite_docs
+repository: https://github.com/cognitedata/dshub-cognite-docs
+test: false
+viewer_name: ''
+

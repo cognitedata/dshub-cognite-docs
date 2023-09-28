@@ -1,5 +1,5 @@
 {
   "packageManager": "python",
-  "packageName": "cognite_dshub_cognite_docs",
-  "uninstallInstructions": "Use your Python package manager (pip, conda, etc.) to uninstall the package cognite_dshub_cognite_docs"
+  "packageName": "dshub_cognite_docs",
+  "uninstallInstructions": "Use your Python package manager (pip, conda, etc.) to uninstall the package dshub_cognite_docs"
 }
