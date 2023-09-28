@@ -17,7 +17,7 @@ fixes this~~.
 ## Development instructions
 ### Requirements
 
-* JupyterLab >= 2.0
+* JupyterLab >= 2.0 # Should work with 3
 
 ### Install
 
