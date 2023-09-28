@@ -53,6 +53,12 @@ jobs:
         jupyter labextension list 2>&1 | grep -ie "@cognite/dshub-cognite-docs.*OK"
         python -m jupyterlab.browser_check
     - run: npm ci
+    - name: Configure npm
+      run: |
+        echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+        cat .npmrc
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
     - run: npm publish --access=public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
