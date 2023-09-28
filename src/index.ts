@@ -1,36 +1,10 @@
-import {
-  ILayoutRestorer,
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin
-} from '@jupyterlab/application';
-
-import {
-  ICommandPalette,
-  IFrame,
-  MainAreaWidget,
-  WidgetTracker
-} from '@jupyterlab/apputils';
-
-import { LabIcon } from '@jupyterlab/ui-components';
-
-import { ILauncher } from '@jupyterlab/launcher';
-import { IMainMenu } from '@jupyterlab/mainmenu';
+import { ILayoutRestorer, JupyterFrontEnd } from '@jupyterlab/application';
 import { Menu } from '@lumino/widgets';
-
-interface ICogniteDocFrameOptions {
-  title: string;
-  url: string;
-  commandId: string;
-  category?: string | undefined;
-  rank?: number | undefined;
-}
-
-// Setting class="jp-icon0" ensures that colors contrast the current theme background.
-const cogniteLogo = new LabIcon({
-  name: 'Cognite Logo',
-  svgstr:
-    '<svg  id="cognite_icon_light" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 128 76"><g class="jp-icon0" fill="#fff" fill-rule="evenodd"><path class="st0" d="M101.1,31.3v-6.5c0-3.1-2.5-5.6-5.6-5.6s-5.6,2.5-5.6,5.6v8.3c-3.4,0.6-7,1.4-10.9,2.3V6.2 c0-3.1-2.5-5.6-5.6-5.6s-5.6,2.5-5.6,5.6v31.9c-0.3,0.1-0.6,0.2-1,0.2c-3.5,0.9-6.7,1.7-9.9,2.4V15.8c0-3.1-2.5-5.6-5.6-5.6 s-5.6,2.5-5.6,5.6v27.3c-3.9,0.8-7.5,1.5-10.9,2V32.4c0-3.1-2.5-5.6-5.6-5.6s-5.6,2.5-5.6,5.6v14.2C11.2,48,4,47.4,3.1,45.3 c-1.6-3.8,9.9-9.1,13-10.8c0.1,0,0.1-0.1,0-0.2c0-0.1-0.2-0.1-0.2-0.1c-3.3,1.4-17.2,7.2-15.6,12.1c1.8,5.5,23.4,6.9,68.1-4 c37.6-9.2,54.8-10.9,56.4-7.4c1.4,3-8,8.7-16.9,12.7c-0.2,0.1-0.4,0.4-0.3,0.7c0.1,0.3,0.4,0.4,0.7,0.3c3.3-1.3,20.3-8.5,19.4-14.6 C127.5,30,118.5,28.9,101.1,31.3z"></path><path class="st0" d="M23.8,57.7v4.2c0,3.1,2.5,5.6,5.6,5.6S35,65,35,61.9v-5.4C30.9,57,27.2,57.4,23.8,57.7z"></path><path class="st0" d="M45.9,54.7v15.1c0,3.1,2.5,5.6,5.6,5.6s5.6-2.5,5.6-5.6V52.5C53.1,53.3,49.4,54.1,45.9,54.7z"></path><path class="st0" d="M68.7,49.8c-0.3,0.1-0.5,0.1-0.7,0.2v10.6c0,3.1,2.5,5.6,5.6,5.6s5.6-2.5,5.6-5.6V47.3 C75.8,48,72.3,48.9,68.7,49.8z"></path><path class="st0" d="M90,44.9v6.4c0,3.1,2.5,5.6,5.6,5.6s5.6-2.5,5.6-5.6v-8.5C97.8,43.3,94.1,44,90,44.9z"></path></g></svg>'
-});
+import { Token } from '@lumino/coreutils';
+import { ICommandPalette, IFrame, MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
+import { IMainMenu } from '@jupyterlab/mainmenu';
+import { ILauncher } from '@jupyterlab/launcher';
+import { LabIcon } from '@jupyterlab/ui-components';
 
 /**
  * An IFrame subclass that bundles all info pertaining to Cognite Docs.
@@ -81,6 +55,122 @@ class CogniteDocFrame extends IFrame {
     this.sandbox = ['allow-same-origin', 'allow-scripts', 'allow-forms'];
   }
 }
+
+function activateCogniteDocumentationButtons(
+  app: JupyterFrontEnd,
+  commandPalette: any,
+  launcher: ILauncher,
+  restorer: ILayoutRestorer,
+  mainMenu: IMainMenu
+) {
+  console.log('activateCogniteDocumentationButtons');
+  const trackerPythonDocs = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
+    namespace: 'cognite-docs-python'
+  });
+
+  // Create and register the Python SDK Docs command with the launcher
+  initializeDocFrame(
+    {
+      title: 'Python SDK Docs',
+      url: 'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
+      commandId: 'cognite:open_python_docs',
+      category: 'Cognite',
+      rank: 0
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    trackerPythonDocs
+  );
+  const trackerAPIDocs = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
+    namespace: 'cognite-docs-api'
+  });
+  // Create and register the API Docs command with the launcher
+  initializeDocFrame(
+    {
+      title: 'API Docs',
+      url: 'https://docs.cognite.com/api/v1/',
+      commandId: 'cognite:open_api_docs',
+      category: 'Cognite',
+      rank: 1
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    trackerAPIDocs
+  );
+
+  const trackerExperimentalPythonDocs = new WidgetTracker<
+    MainAreaWidget<CogniteDocFrame>
+  >({
+    namespace: 'cognite-docs-experimental-python'
+  });
+
+  initializeDocFrame(
+    {
+      title: 'Experimental Python SDK Docs',
+      url: 'https://cognite-sdk-experimental.readthedocs-hosted.com/en/latest/',
+      commandId: 'cognite:open_experimental_python_docs',
+      category: 'Cognite',
+      rank: 2
+    },
+    app,
+    launcher,
+    commandPalette,
+    restorer,
+    trackerExperimentalPythonDocs
+  );
+
+  // Hackish way of restoring the layout, having one tracker per widget.
+  // I do not understand how the widget-tracker works.
+  restorer.restore(trackerPythonDocs, {
+    command: 'cognite:open_python_docs',
+    name: () => 'cognite-docs-python'
+  });
+  restorer.restore(trackerAPIDocs, {
+    command: 'cognite:open_api_docs',
+    name: () => 'cognite-docs-api'
+  });
+  restorer.restore(trackerExperimentalPythonDocs, {
+    command: 'cognite:open_experimental_python_docs',
+    name: () => 'cognite-docs-experimental-python'
+  });
+
+  // Register the doc-commands in the Cognite MainMenu Item.
+  const cogniteMenu = new Menu({ commands: app.commands });
+  cogniteMenu.title.label = 'CDF';
+
+  for (const cmd of [
+    'cognite:open_python_docs',
+    'cognite:open_api_docs',
+    'cognite:open_experimental_python_docs'
+  ]) {
+    cogniteMenu.addItem({
+      command: cmd,
+      args: {}
+    });
+  }
+
+  // Add the CDF-menu to the main menu
+  mainMenu.addMenu(cogniteMenu, undefined, { rank: 40 });
+}
+
+interface ICogniteDocFrameOptions {
+  title: string;
+  url: string;
+  commandId: string;
+  category: string;
+  rank?: number | undefined;
+}
+
+// Setting class="jp-icon0" ensures that colors contrast the current theme background.
+const cogniteLogo = new LabIcon({
+  name: 'Cognite Logo',
+  svgstr:
+    '<svg  id="cognite_icon_light" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 128 76"><g class="jp-icon0" fill="#fff" fill-rule="evenodd"><path class="st0" d="M101.1,31.3v-6.5c0-3.1-2.5-5.6-5.6-5.6s-5.6,2.5-5.6,5.6v8.3c-3.4,0.6-7,1.4-10.9,2.3V6.2 c0-3.1-2.5-5.6-5.6-5.6s-5.6,2.5-5.6,5.6v31.9c-0.3,0.1-0.6,0.2-1,0.2c-3.5,0.9-6.7,1.7-9.9,2.4V15.8c0-3.1-2.5-5.6-5.6-5.6 s-5.6,2.5-5.6,5.6v27.3c-3.9,0.8-7.5,1.5-10.9,2V32.4c0-3.1-2.5-5.6-5.6-5.6s-5.6,2.5-5.6,5.6v14.2C11.2,48,4,47.4,3.1,45.3 c-1.6-3.8,9.9-9.1,13-10.8c0.1,0,0.1-0.1,0-0.2c0-0.1-0.2-0.1-0.2-0.1c-3.3,1.4-17.2,7.2-15.6,12.1c1.8,5.5,23.4,6.9,68.1-4 c37.6-9.2,54.8-10.9,56.4-7.4c1.4,3-8,8.7-16.9,12.7c-0.2,0.1-0.4,0.4-0.3,0.7c0.1,0.3,0.4,0.4,0.7,0.3c3.3-1.3,20.3-8.5,19.4-14.6 C127.5,30,118.5,28.9,101.1,31.3z"></path><path class="st0" d="M23.8,57.7v4.2c0,3.1,2.5,5.6,5.6,5.6S35,65,35,61.9v-5.4C30.9,57,27.2,57.4,23.8,57.7z"></path><path class="st0" d="M45.9,54.7v15.1c0,3.1,2.5,5.6,5.6,5.6s5.6-2.5,5.6-5.6V52.5C53.1,53.3,49.4,54.1,45.9,54.7z"></path><path class="st0" d="M68.7,49.8c-0.3,0.1-0.5,0.1-0.7,0.2v10.6c0,3.1,2.5,5.6,5.6,5.6s5.6-2.5,5.6-5.6V47.3 C75.8,48,72.3,48.9,68.7,49.8z"></path><path class="st0" d="M90,44.9v6.4c0,3.1,2.5,5.6,5.6,5.6s5.6-2.5,5.6-5.6v-8.5C97.8,43.3,94.1,44,90,44.9z"></path></g></svg>'
+});
 
 function initializeDocFrame(
   docFrameOptions: ICogniteDocFrameOptions,
@@ -138,155 +228,14 @@ function initializeDocFrame(
 }
 
 /**
- * The function that executes when the extension loads. Creates
- * a CogniteDocFrame for the PythonSDK and the API, calls `addDocCommandToPalette`,
- * and attaches the commands to the launcher.
- *
- * @param app main Jupyter application
- * @param commandPalette a reference to the commandPalette
- * @param launcher a reference to the jupyter launcher.
- * @param restorer a reference to the jupyter layout restorer
- * @param mainMenu a reference to the top-bar in jupyter.
+ * Initialization data for the dshub-cognite-docs extension.
  */
-function activateCogniteDocumentationButtons(
-  app: JupyterFrontEnd,
-  commandPalette: ICommandPalette,
-  launcher: ILauncher,
-  restorer: ILayoutRestorer,
-  mainMenu: IMainMenu
-): void {
-  const trackerPythonDocs = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
-    namespace: 'cognite-docs-python'
-  });
-
-  // Create and register the Python SDK Docs command with the launcher
-  initializeDocFrame(
-    {
-      title: 'Python SDK Docs',
-      url: 'https://cognite-sdk-python.readthedocs-hosted.com/en/latest/',
-      commandId: 'cognite:open_python_docs',
-      category: 'Cognite',
-      rank: 0
-    },
-    app,
-    launcher,
-    commandPalette,
-    restorer,
-    trackerPythonDocs
-  );
-
-  const trackerAPIDocs = new WidgetTracker<MainAreaWidget<CogniteDocFrame>>({
-    namespace: 'cognite-docs-api'
-  });
-  // Create and register the API Docs command with the launcher
-  initializeDocFrame(
-    {
-      title: 'API Docs',
-      url: 'https://docs.cognite.com/api/v1/',
-      commandId: 'cognite:open_api_docs',
-      category: 'Cognite',
-      rank: 1
-    },
-    app,
-    launcher,
-    commandPalette,
-    restorer,
-    trackerAPIDocs
-  );
-
-  const trackerExperimentalPythonDocs = new WidgetTracker<
-    MainAreaWidget<CogniteDocFrame>
-  >({
-    namespace: 'cognite-docs-experimental-python'
-  });
-
-  initializeDocFrame(
-    {
-      title: 'Experimental Python SDK Docs',
-      url: 'https://cognite-sdk-experimental.readthedocs-hosted.com/en/latest/',
-      commandId: 'cognite:open_experimental_python_docs',
-      category: 'Cognite',
-      rank: 2
-    },
-    app,
-    launcher,
-    commandPalette,
-    restorer,
-    trackerExperimentalPythonDocs
-  );
-
-  const trackerExperimentalAPIDocs = new WidgetTracker<
-    MainAreaWidget<CogniteDocFrame>
-  >({
-    namespace: 'cognite-docs-experimental-api'
-  });
-
-  initializeDocFrame(
-    {
-      title: 'Experimental API Docs',
-      url: 'https://docs.cognite.com/api/playground/',
-      commandId: 'cognite:open_experimental_api_docs',
-      category: 'Cognite',
-      rank: 3
-    },
-    app,
-    launcher,
-    commandPalette,
-    restorer,
-    trackerExperimentalAPIDocs
-  );
-
-  // Hackish way of restoring the layout, having one tracker per widget.
-  // I do not understand how the widget-tracker works.
-  restorer.restore(trackerPythonDocs, {
-    command: 'cognite:open_python_docs',
-    name: () => 'cognite-docs-python'
-  });
-  restorer.restore(trackerAPIDocs, {
-    command: 'cognite:open_api_docs',
-    name: () => 'cognite-docs-api'
-  });
-  restorer.restore(trackerExperimentalPythonDocs, {
-    command: 'cognite:open_experimental_python_docs',
-    name: () => 'cognite-docs-experimental-python'
-  });
-  restorer.restore(trackerExperimentalAPIDocs, {
-    command: 'cognite:open_experimental_api_docs',
-    name: () => 'cognite-docs-experimental-api'
-  });
-
-  // Register the doc-commands in the Cognite MainMenu Item.
-  const cogniteMenu = new Menu({ commands: app.commands });
-  cogniteMenu.title.label = 'CDF';
-
-  for (const cmd of [
-    'cognite:open_python_docs',
-    'cognite:open_api_docs',
-    'cognite:open_experimental_python_docs',
-    'cognite:open_experimental_api_docs'
-  ]) {
-    cogniteMenu.addItem({
-      command: cmd,
-      args: {}
-    });
-  }
-
-  // Add the CDF-menu to the main menu
-  mainMenu.addMenu(cogniteMenu, { rank: 40 });
-}
-
-/**
- * Initialization data for the cognite-documentation extension.
- * Entrypoint for the JupyterExtension. For devs, I recommend you start here.
- * This function is responsible for requesting additional functionality (using the requires keyword),
- * and when the extension is activated, it calls the 'activate'-function. If auto-start is enabled,
- * automatically activates on page-load.
- */
-const extension: JupyterFrontEndPlugin<void> = {
-  id: 'cognite-documentation',
+const plugin: { activate: (app: JupyterFrontEnd, commandPalette: any, launcher: ILauncher, restorer: ILayoutRestorer, mainMenu: IMainMenu) => void; description: string; id: string; autoStart: boolean; requires: (Token<ICommandPalette> | Token<ILauncher> | ILauncher | Token<ILayoutRestorer> | Token<IMainMenu> | IMainMenu)[] } = {
+  id: 'dshub-cognite-docs:plugin',
+  description: 'Integrated cognite documentation',
   autoStart: true,
-  requires: [ICommandPalette, ILauncher, ILayoutRestorer, IMainMenu],
-  activate: activateCogniteDocumentationButtons
+  activate: activateCogniteDocumentationButtons,
+  requires: [ICommandPalette, ILauncher, ILayoutRestorer, IMainMenu]
 };
 
-export default extension;
+export default plugin;

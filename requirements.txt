@@ -1,0 +1,4 @@
+copier~=7.2
+pydantic<2
+jinja2-time
+jupyterlab>=4.0

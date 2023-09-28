@@ -1,4 +1,7 @@
-# dshub-cognite-docs
+# dshub_cognite_docs
+
+[![Github Actions Status](https://github.com/cognitedata/dshub-cognite-docs/workflows/Build/badge.svg)](https://github.com/cognitedata/dshub-cognite-docs/actions/workflows/build.yml)
+Integrated Cognite documentation
 
 A DSHub extension that provides cognite documentation in separate IFrame widgets that can be freely moved and pinned
 around the screen.
@@ -14,20 +17,31 @@ fixes this~~.
 * [Fixed] ~~Restoring the layout on page-refresh may act up. Need to look into how to restore multiple widgets~~
 * [Fixed] ~~Icons are hard to see when using the dark theme.~~ ~~Currently needs a refresh for changes to take effect.~~
 
-## Development instructions
-### Requirements
+## Requirements
 
-* JupyterLab >= 2.0
+- JupyterLab >= 4.0.0
 
-### Install
+## Install
+
+To install the extension, execute:
 
 ```bash
-jupyter labextension install dshub-cognite-docs
+pip install dshub_cognite_docs
 ```
 
-### Contributing
+## Uninstall
 
-#### Install
+To remove the extension, execute:
+
+```bash
+pip uninstall dshub_cognite_docs
+```
+
+## Contributing
+
+### Development install
+
+Note: You will need NodeJS to build the extension package.
 
 The `jlpm` command is JupyterLab's pinned version of
 [yarn](https://yarnpkg.com/) that is installed with JupyterLab. You may use
@@ -35,32 +49,42 @@ The `jlpm` command is JupyterLab's pinned version of
 
 ```bash
 # Clone the repo to your local environment
-# Move to dshub-cognite-docs directory
-
-# Install dependencies
-jlpm
-# Build Typescript source
-jlpm build
+# Change directory to the dshub_cognite_docs directory
+# Install package in development mode
+pip install -e "."
 # Link your development version of the extension with JupyterLab
-jupyter labextension link .
-# Rebuild Typescript source after making changes
+jupyter labextension develop . --overwrite
+# Rebuild extension Typescript source after making changes
 jlpm build
-# Rebuild JupyterLab after making any changes
-jupyter lab build
 ```
 
-You can watch the source directory and run JupyterLab in watch mode to watch for changes in the extension's source and automatically rebuild the extension and application.
+You can watch the source directory and run JupyterLab at the same time in different terminals to watch for changes in the extension's source and automatically rebuild the extension.
 
 ```bash
-# Watch the source directory in another terminal tab
+# Watch the source directory in one terminal, automatically rebuilding when needed
 jlpm watch
-# Run jupyterlab in watch mode in one terminal tab
-jupyter lab --watch
+# Run JupyterLab in another terminal
+jupyter lab
 ```
 
-#### Uninstall
+With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
+
+By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
 
 ```bash
-
-jupyter labextension uninstall dshub-cognite-docs
+jupyter lab build --minimize=False
 ```
+
+### Development uninstall
+
+```bash
+pip uninstall dshub_cognite_docs
+```
+
+In development mode, you will also need to remove the symlink created by `jupyter labextension develop`
+command. To find its location, you can run `jupyter labextension list` to figure out where the `labextensions`
+folder is located. Then you can remove the symlink named `dshub-cognite-docs` within that folder.
+
+### Packaging the extension
+
+See [RELEASE](RELEASE.md)
